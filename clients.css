@@ -15,7 +15,7 @@ thead {
     color: whitesmoke;
 }
 
-td {
+.myTd {
     vertical-align: middle !important;
     padding: 0px 20px 0px 20px !important;
     width: fit-content;
@@ -33,11 +33,11 @@ td {
     content: '\25bc';   
 }
 
-td img {
+.myTd img {
     width: 20px;
 }
 
-td img:hover {
+.myTd img:hover {
     transform: scale(1.1);
 }
 
@@ -75,9 +75,4 @@ td img:hover {
 
 .error {
     margin-bottom: 10px;
-}
-
-span {
-    color: rgb(255, 92, 92);
-    margin-top: 0px;
 }

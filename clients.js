@@ -10,7 +10,6 @@ app.value('paginationData' ,{
 app.controller('clientController', function($scope, $http, $log, $window, $mdDialog, paginationData){
     // How many pages can you click on
     $scope.maxSize = 10
-
     $window.onload = function() {
         if($window.localStorage.getItem('userID') === "undefined" || $window.localStorage.getItem('userID') === null || $window.localStorage.getItem('emailCode') === "undefined" || $window.localStorage.getItem('emailCode') === null){
             // Ilegal Access -> Redirect to login
@@ -77,7 +76,7 @@ app.controller('clientController', function($scope, $http, $log, $window, $mdDia
         $http.post(url, body, header) 
             .then(res => {
                 console.log(res)
-                //$window.location.reload();
+                $window.location.reload();
             })
             .catch(err =>{
                 console.log(err)
@@ -192,7 +191,7 @@ app.controller('clientController', function($scope, $http, $log, $window, $mdDia
     }
 
     $scope.openMap = function (long, lat) {
-        var modal = $mdDialog.show({
+        $mdDialog.show({
             templateUrl: 'mapModal.html',
             parent: angular.element(document.body),
             locals: {long: long, lat: lat},
@@ -228,5 +227,13 @@ app.controller('clientController', function($scope, $http, $log, $window, $mdDia
         $scope.close = function() {
             $mdDialog.close()
         }
+    }
+
+})
+
+
+app.config(function($mdDateLocaleProvider) {
+    $mdDateLocaleProvider.formatDate = function(date) {
+       return moment(date).format('DD/MM/YYYY');
     }
 })
