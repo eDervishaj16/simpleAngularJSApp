@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="login.css">
+
+    <!-- Including Angular JS-->
+    <script 
+        src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">
+    </script>
+    <title>Confirm Email</title>
+</head>
+<body ng-app = 'myEmail' ng-controller="emailController">
+    <div class="main container">      
+        <div class="row">
+            <img class = "rounded mx-auto d-block" style = "width: 70px; margin-top: 10px;" alt="login-icon" src="https://img.icons8.com/nolan/64/000000/login-rounded-right.png">
+        </div>
+        <div class="row">
+            <h2 class = "mx-auto" style = "color: white">Confirmation Code:</h2>
+        </div>
+        <div class="row">
+            <h6 class = "mx-auto" style = "color: white" >Plase enter the confirmation code you recieved on your email address</h6>
+        </div>
+        <div class="row myForm" style="text-align:center !important;">
+            <div class="col">
+                 <input style="margin: auto; text-align:center !important;" class="form-control myInput" aria-label="Default" aria-describedby="inputGroup-sizing-default" type="text" placeholder="Code" required  ng-model="emailCode">
+            </div>
+        </div>
+        <div class="row" style="text-align: center !important">
+            <div class="col">
+               <button type="submit" class="btn btn-primary loginBtn" ng-click ="checkCode()">Login</button> 
+            </div>
+        </div>
+    </div>
+
+    <script>
+            var app = angular.module('myEmail', [])
+                .controller('emailController', function($scope, $http, $log, $window){   
+                    // Ilegal Access -> Redirect to login
+                    $window.onload = function() {
+                        if($window.localStorage.getItem('userID') === "undefined"){
+                            $log.log('http://localhost:3000/login.html')
+                            $window.location.href = 'http://localhost:3000/login.html'
+                        }                    
+                        // If the session is still active -> Redirect to clients
+                        else if($window.localStorage.getItem('userID') !== "undefined" && $window.localStorage.getItem('emailCode') !== "undefined" && $window.localStorage.getItem('userID') !== null && $window.localStorage.getItem('emailCode') !== null){
+                            $log.log('http://localhost:3000/clients.html')
+                            $window.location.href = 'http://localhost:3000/clients.html'
+                        }
+                    
+                    }
+
+                    $scope.checkCode = function() {
+                        if($scope.emailCode === '1234') {
+                            // GOTO: Clients
+                            $window.localStorage.setItem('emailCode', $scope.emailCode)                              
+                            $log.log('http://localhost:3000/clients.html')
+                            $window.location.href = 'http://localhost:3000/clients.html'
+                        } else {
+
+                        }
+                    }
+                       
+                })
+    </script>
+</body>
+</html>

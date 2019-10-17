@@ -1,0 +1,83 @@
+body {
+    height: fit-content !important;
+}
+
+.myContainer {
+    margin-top: 5%;
+}
+
+table {
+    text-align: center;
+}
+
+thead {
+    background-color: #343a40 !important;
+    color: whitesmoke;
+}
+
+td {
+    vertical-align: middle !important;
+    padding: 0px 20px 0px 20px !important;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.sortedorder {
+    color: white;
+}
+
+.sortorder:after {
+    content: '\25b2';
+}
+.sortorder.reverse:after {
+    content: '\25bc';   
+}
+
+td img {
+    width: 20px;
+}
+
+td img:hover {
+    transform: scale(1.1);
+}
+
+.holder {
+    width: fit-content;
+    border: 1px solid black;
+    text-align: center;
+    background-color: #f2f2f2;
+    height: fit-content;
+}
+
+.addInput {
+    margin-bottom: 10px !important;
+    width: 300px;
+}
+
+.title {
+    background-color:#343a40;
+    border-bottom: 1px solid #343a40;
+    margin: 0px;
+    padding: 10px 0px 10px 0px;
+    width: 100% !important;
+    font-size: 20px;
+    color: whitesmoke;
+}
+
+.myGroup {
+    padding: 20px;
+}
+
+.delBtn {
+    background-color: transparent;
+    border: 0px
+}
+
+.error {
+    margin-bottom: 10px;
+}
+
+span {
+    color: rgb(255, 92, 92);
+    margin-top: 0px;
+}

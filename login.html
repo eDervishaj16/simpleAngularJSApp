@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="login.css">
+
+    <!-- Including Angular JS-->
+    <script 
+        src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">
+    </script>
+    <title>Welcome</title>
+</head>
+<body>
+    <div class="main container" ng-app = 'myLogin' ng-controller="loginController">      
+        <div class="row">
+            <img class = "rounded mx-auto d-block" style = "width: 70px; margin-top: 10px;" alt="login-icon" src="https://img.icons8.com/nolan/64/000000/login-rounded-right.png">
+        </div>
+        <div class="row">
+            <h2 class = "mx-auto" style = "color: white">Login</h2>
+        </div>
+        <div class="row myForm">
+            <!-- Input Fields -->
+            <form name = "loginForm"  novalidate class = "w-100" ng-submit = "sendCode()">
+                <!-- Username -->
+                <div class="form-group" ng-class="{ 'has-error' : loginForm.username.$invalid && !loginForm.username.$pristine }">
+                    <input name = "username" class="form-control myInput" aria-label="Default" aria-describedby="inputGroup-sizing-default" type="text" placeholder="Username" required  ng-model="name">
+                    <label ng-show="loginForm.username.$invalid && !loginForm.username.$pristine" class="help-block red">You username is required.</label>
+                </div>
+                <!-- Password -->
+                <div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }">
+                    <input name = "password" class="form-control myInput" aria-label="Default" aria-describedby="inputGroup-sizing-default" type="password" placeholder="Password" required  ng-model="password">  
+                    <label ng-show="loginForm.password.$invalid && !loginForm.password.$pristine" class="help-block red">You password is required.</label>
+                </div>
+                <button type="submit" class="btn btn-primary loginBtn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+            var app = angular.module('myLogin', [])
+                .controller('loginController', function($scope, $http, $log, $window){   
+                    // If the session is still active -> Redirect to clients
+                    $window.onload = function () {
+                        if($window.localStorage.getItem('userID') !== "undefined" && $window.localStorage.getItem('emailCode') !== "undefined" && $window.localStorage.getItem('userID') !== null && $window.localStorage.getItem('emailCode') !== null){
+                            $log.log('http://localhost:3000/clients.html')
+                            $window.location.href = 'http://localhost:3000/clients.html'
+                        }
+                    }
+                    
+                    $scope.sendCode = function() {
+                        // Login Data
+                        var url = 'http://db/DetyreAPI/api/Client/CheckUser'
+                        var header = {
+                            'Content-type': "application/json; charset=utf-8" 
+                        }
+                        var body = {
+                            "Username": $scope.name,
+                            "Password": $scope.password
+                        }
+                        
+                        // Check Credentials
+                        $http.post(url, body, header)
+                            .then(res => {
+                                if(res.data.Sms === 'Perdorues/Fjalekalim i gabuar.') {
+                                    // Unsuccesful login -> Display error message
+                                    $scope.errorMsg = res.data.Sms
+                                }
+                                else {      
+                                    // User exists & Has valid credentials
+                                    // Sending Email Code
+                                    var url = 'http://db/DetyreAPI/api/Client/sendEmail'
+                                    var header = {
+                                        'Content-type': "application/json; charset=utf-8" 
+                                    }
+                                    var body = {
+                                        "code": "123456",
+                                        "email": "i.sauli@logic.al"
+                                    } 
+                                    // Store the userID to localStorage
+                                    $window.localStorage.setItem('userID', res.data.Id)
+
+                                    // Sending Email Code
+                                    $http.post(url, body, header)
+                                        .then(res => {
+                                            // GOTO: Email Confirmation
+                                            $log.log('http://localhost:3000/confirmation.html')
+                                            $window.location.href = 'http://localhost:3000/confirmation.html'
+                                        })
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                    }
+                })
+    </script>
+</body>
+</html>

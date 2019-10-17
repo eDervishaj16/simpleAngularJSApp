@@ -1,0 +1,18 @@
+
+<div class="modal-header" style = 'background-color: #343a40; color: whitesmoke'>
+        <h3>Update User</h3>
+</div>
+<div class="modal-body">
+        <form name="updateClientForm" ng-submit="submitChanges(model, mdClient)" style = "text-align: center;">
+                <input name="FirstName" class="form-control addInput" type="text" ng-model="model.FirstName" placeholder='{{mdClient.FirstName}}'>
+                <input name = "LastName" class="form-control addInput" type="text" ng-model="model.LastName" placeholder='{{mdClient.LastName}}'>
+                <input name = "Address" class="form-control addInput" type="text" ng-model="model.Address" placeholder='{{mdClient.Address}}'>
+                <input name = "Tel" class="form-control addInput" type="text" ng-model="model.Tel" placeholder='{{mdClient.Tel}}'>
+                <input name = "Latitude" class="form-control addInput" type="text" ng-model="model.Latitude" placeholder='{{mdClient.Latitude}}'>
+                <input name = "Longitude" class="form-control addInput" type="text" ng-model="model.Longitude" placeholder='{{mdClient.Longitude}}'>
+                <input name = "Active" class="form-control addInput" type="text" ng-model="model.Active" placeholder='{{mdClient.Active}}'>
+                <md-datepicker ng-model="model.BirthDate" md-placeholder="{{mdClient.BirthDate.split(' ')[0]}}"></md-datepicker><br>
+                <button style = "margin-top: 15px;" class="btn btn-primary" type = 'submit'>Update</button>
+                <button style = "margin-top: 15px;" class="btn btn-danger" ng-click="cancel()">Cancel</button>     
+        </form>
+</div>
